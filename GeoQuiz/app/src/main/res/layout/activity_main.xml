@@ -24,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="@string/btn_true"/>
+            android:text="@string/btn_true" />
 
         <Button
             android:id="@+id/false_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:text="@string/btn_false"/>
+            android:text="@string/btn_false" />
 
     </LinearLayout>
 
@@ -39,6 +39,8 @@
         android:id="@+id/next_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_next"/>
+        android:drawableRight="@drawable/arrow_right"
+        android:drawablePadding="4dp"
+        android:text="@string/btn_next" />
 
 </LinearLayout>
