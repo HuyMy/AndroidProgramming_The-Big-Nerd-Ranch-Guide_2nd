@@ -3,6 +3,7 @@
     <string name="btn_true">True</string>
     <string name="btn_false">False</string>
     <string name="btn_next">Next</string>
+    <string name="btn_prev">Prev</string>
     <string name="question_oceans">The Pacific Ocean is larger than the Atlantic Ocean.</string>
     <string name="question_mideast">The Suez Canal connects the Red Sea and the Indian Ocean.</string>
     <string name="question_africa">The source of the Nile River is in Egypt.</string>

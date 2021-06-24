@@ -23,24 +23,41 @@
             android:id="@+id/true_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="12dp"
             android:text="@string/btn_true" />
 
         <Button
             android:id="@+id/false_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="12dp"
             android:text="@string/btn_false" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/next_btn"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/arrow_right"
-        android:drawablePadding="4dp"
-        android:text="@string/btn_next" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/prev_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:drawableLeft="@drawable/arrow_left"
+            android:drawablePadding="4dp"
+            android:text="@string/btn_prev" />
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow_right"
+            android:drawablePadding="4dp"
+            android:layout_marginStart="12dp"
+            android:text="@string/btn_next" />
+
+    </LinearLayout>
 
 </LinearLayout>
