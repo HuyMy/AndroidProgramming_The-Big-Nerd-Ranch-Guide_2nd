@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".CrimeFragment">
+    android:orientation="vertical">
 
     <TextView
         style="?android:listSeparatorTextViewStyle"
@@ -16,8 +14,8 @@
         android:id="@+id/crime_title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/crime_title_hint"
         android:layout_marginHorizontal="16dp"
+        android:hint="@string/crime_title_hint"
         android:importantForAutofill="no"
         android:inputType="textCapSentences" />
 
@@ -27,17 +25,23 @@
         android:layout_height="wrap_content"
         android:text="@string/crime_details_label" />
 
-    <Button
-        android:id="@+id/crime_date_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp" />
-
-    <CheckBox
-        android:id="@+id/crime_solved_checkbox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:text="@string/crime_solved_label"/>
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/crime_date_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:id="@+id/crime_solved_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/crime_solved_label" />
+    </LinearLayout>
 </LinearLayout>
