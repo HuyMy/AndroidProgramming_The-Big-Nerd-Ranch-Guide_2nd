@@ -1,5 +1,6 @@
 package com.huymy.example.geoquiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -14,10 +15,12 @@ public class CheatActivity extends AppCompatActivity {
             "com.huymy.example.geoquiz.answer_is_true";
     private static final String EXTRA_ANSWER_SHOWN =
             "com.huymy.example.geoquiz.answer_shown";
+    private static final String KEY_ANSWER_SHOWN = "answer_shown";
 
     private boolean mAnswerIsTrue;
     private Button mShowAnswerBtn;
     private TextView mAnswerTextView;
+    private boolean mAnswerShown;
 
     public static boolean wasAnswerShown(Intent result) {
         return result.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
@@ -38,9 +41,17 @@ public class CheatActivity extends AppCompatActivity {
                 } else {
                     mAnswerTextView.setText(R.string.btn_false);
                 }
-                setAnswerShownResult(true);
+                mAnswerShown = true;
+                setAnswerShownResult();
             }
         });
+
+        if (savedInstanceState != null) {
+            mAnswerShown = savedInstanceState.getBoolean(KEY_ANSWER_SHOWN);
+            if (mAnswerShown) {
+                setAnswerShownResult();
+            }
+        }
     }
 
     public static Intent newIntent(Context packageContext, boolean isAnswerTrue) {
@@ -49,9 +60,15 @@ public class CheatActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void setAnswerShownResult(boolean isAnswerShown) {
+    private void setAnswerShownResult() {
         Intent data = new Intent();
-        data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
+        data.putExtra(EXTRA_ANSWER_SHOWN, true);
         setResult(RESULT_OK, data);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_ANSWER_SHOWN, mAnswerShown);
     }
 }
