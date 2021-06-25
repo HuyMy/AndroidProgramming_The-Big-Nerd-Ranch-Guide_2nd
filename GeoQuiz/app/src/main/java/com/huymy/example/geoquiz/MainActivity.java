@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String KEY_INDEX = "index";
-    private static final String KEY_IS_CHEATER = "is_cheater";
     private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button mTrueButton;
@@ -40,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
-            mIsCheater = savedInstanceState.getBoolean(KEY_IS_CHEATER, false);
         }
+        mIsCheater = mQuestionBank[mCurrentIndex].isCheated();
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         updateQuestion();
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
-                mIsCheater = false;
+                mIsCheater = mQuestionBank[mCurrentIndex].isCheated();
             }
         });
 
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex + mQuestionBank.length - 1) % mQuestionBank.length;
                 updateQuestion();
-                mIsCheater = false;
+                mIsCheater = mQuestionBank[mCurrentIndex].isCheated();
             }
         });
 
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_INDEX, mCurrentIndex);
-        outState.putBoolean(KEY_IS_CHEATER, mIsCheater);
     }
 
     @Override
@@ -116,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHEAT) {
             if (data != null) {
                 mIsCheater = CheatActivity.wasAnswerShown(data);
+                if (mIsCheater) {
+                    mQuestionBank[mCurrentIndex].setCheated(true);
+                }
             }
         }
     }
