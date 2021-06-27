@@ -1,7 +1,5 @@
 package com.huymy.example.criminalintent;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,8 +22,6 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
 
     private static final String ARG_CRIME_ID = "crime_id";
-    private static final String EXTRA_IS_CHANGED = "com.huymy.example.criminalintent.is_changed";
-
     private Crime mCrime;
     private EditText mTitleFieldText;
     private Button mDateButton;
@@ -63,7 +59,6 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 mCrime.setTitle(charSequence.toString());
-                setChangedResult();
             }
 
             @Override
@@ -84,19 +79,8 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 mCrime.setSolved(isChecked);
-                setChangedResult();
             }
         });
         return v;
-    }
-
-    public void setChangedResult() {
-        Intent data = new Intent();
-        data.putExtra(EXTRA_IS_CHANGED, true);
-        getActivity().setResult(Activity.RESULT_OK, data);
-    }
-
-    public static boolean isContentChanged(Intent result) {
-        return result.getBooleanExtra(EXTRA_IS_CHANGED, false);
     }
 }
