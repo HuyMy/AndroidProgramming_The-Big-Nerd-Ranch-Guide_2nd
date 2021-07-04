@@ -3,6 +3,7 @@ package com.huymy.example.criminalintent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
 
     private static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
     private Crime mCrime;
     private EditText mTitleFieldText;
     private Button mDateButton;
@@ -71,7 +73,14 @@ public class CrimeFragment extends Fragment {
         Date crimeDate = mCrime.getDate();
         SimpleDateFormat df = new SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.US);
         mDateButton.setText(df.format(crimeDate));
-        mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = new DatePickerFragment();
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved_checkbox);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
