@@ -1,5 +1,7 @@
 package com.huymy.example.criminalintent;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +26,7 @@ public class CrimeFragment extends Fragment {
 
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 0;
     private Crime mCrime;
     private EditText mTitleFieldText;
     private Button mDateButton;
@@ -76,8 +79,9 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = new DatePickerFragment();
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(crimeDate);
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });
@@ -91,5 +95,17 @@ public class CrimeFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mCrime.setDate(date);
+            mDateButton.setText(date.toString());
+        }
     }
 }
