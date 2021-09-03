@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-public abstract class SingleFragmentActivity extends FragmentActivity {
+public abstract class SingleFragmentActivity extends AppCompatActivity {
 
     protected abstract Fragment createFragment();
 
