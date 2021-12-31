@@ -15,7 +15,7 @@ import android.os.Bundle;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends FragmentActivity {
 
     private static final String EXTRA_CRIME_ID = "com.huymy.example.criminalintent.crime_id";
 
