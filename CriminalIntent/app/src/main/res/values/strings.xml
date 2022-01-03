@@ -12,4 +12,5 @@
         <item quantity="one">%1$d crime</item>
         <item quantity="other">%1$d crimes</item>
     </plurals>
+    <string name="delete">Delete</string>
 </resources>
