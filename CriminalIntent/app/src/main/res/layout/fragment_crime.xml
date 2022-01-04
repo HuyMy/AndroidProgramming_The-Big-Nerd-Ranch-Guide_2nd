@@ -16,8 +16,8 @@
         android:id="@+id/crime_title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/crime_title_hint"
         android:layout_marginHorizontal="16dp"
+        android:hint="@string/crime_title_hint"
         android:importantForAutofill="no"
         android:inputType="textCapSentences" />
 
@@ -38,6 +38,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:text="@string/crime_solved_label"/>
+        android:text="@string/crime_solved_label" />
+
+    <Button
+        android:id="@+id/crime_suspect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/crime_suspect_text" />
+
+    <Button
+        android:id="@+id/crime_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/crime_report_text" />
 
 </LinearLayout>
