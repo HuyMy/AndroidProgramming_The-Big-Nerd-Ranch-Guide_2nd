@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -113,15 +114,13 @@ public class CrimeFragment extends Fragment {
         });
 
         mReportButton = (Button) v.findViewById(R.id.crime_report);
-        mReportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
-                intent.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
-                startActivity(intent);
-            }
+        mReportButton.setOnClickListener(view -> {
+            Intent shareIntent = new ShareCompat.IntentBuilder(getActivity())
+                    .setType("text/plain")
+                    .setSubject(getString(R.string.crime_report_subject))
+                    .setText(getCrimeReport())
+                    .getIntent();
+            startActivity(shareIntent);
         });
 
         final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
