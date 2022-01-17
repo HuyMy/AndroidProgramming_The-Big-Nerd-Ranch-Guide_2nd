@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +44,7 @@ public class CrimeFragment extends Fragment {
     private CheckBox mSolvedCheckBox;
     private Button mReportButton;
     private Button mSuspectButton;
+    private ImageButton mCallButton;
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -136,6 +138,18 @@ public class CrimeFragment extends Fragment {
             mSuspectButton.setText(mCrime.getSuspect());
         }
 
+        mCallButton = v.findViewById(R.id.suspect_call_button);
+        if (mCrime.getPhoneNumber() == null) {
+            mCallButton.setEnabled(false);
+        } else {
+            mCallButton.setEnabled(true);
+            mCallButton.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + mCrime.getPhoneNumber()));
+                startActivity(intent);
+            });
+        }
+
         return v;
     }
 
@@ -167,7 +181,7 @@ public class CrimeFragment extends Fragment {
             updateDate();
         } else if (requestCode == REQUEST_CONTACT && data != null) {
             Uri contactUri = data.getData();
-            String[] queryFields = new String[] {ContactsContract.Contacts.DISPLAY_NAME};
+            String[] queryFields = new String[] {ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts._ID};
             try (Cursor c = getActivity().getContentResolver()
                     .query(contactUri, queryFields, null, null, null)) {
                 if (c.getCount() == 0) {
@@ -175,8 +189,17 @@ public class CrimeFragment extends Fragment {
                 }
                 c.moveToFirst();
                 String suspect = c.getString(0);
+                long id = Long.parseLong(c.getString(1));
+                String phoneNumber = getPhoneNumber(id);
                 mCrime.setSuspect(suspect);
+                mCrime.setPhoneNumber(phoneNumber);
                 mSuspectButton.setText(suspect);
+                mCallButton.setEnabled(true);
+                mCallButton.setOnClickListener(view -> {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + phoneNumber));
+                    startActivity(intent);
+                });
             }
         }
     }
@@ -197,5 +220,23 @@ public class CrimeFragment extends Fragment {
             suspect = getString(R.string.crime_report_suspect, suspect);
         }
         return getString(R.string.crime_report, mCrime.getTitle(), dateString, solvedString, suspect);
+    }
+
+    private String getPhoneNumber(long contactId) {
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] queryFields = new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER};
+        String where = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?";
+        String[] selectionArgs = new String[] { String.valueOf(contactId) };
+        try (Cursor result = getActivity().getContentResolver().query(uri, queryFields, where, selectionArgs, null)) {
+            if (result.getCount() == 0) {
+                return null;
+            }
+            result.moveToFirst();
+                String phone = result.getString(0);
+                if (phone != null) {
+                    return phone;
+                }
+        }
+        return null;
     }
 }
