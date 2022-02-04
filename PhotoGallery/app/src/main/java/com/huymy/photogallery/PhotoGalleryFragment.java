@@ -1,6 +1,8 @@
 package com.huymy.photogallery;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PhotoGalleryFragment extends Fragment {
 
+    private final static String TAG = "PhotoGalleryFragment";
+
     private RecyclerView mPhotoRecyclerView;
 
     public static PhotoGalleryFragment newInstance() {
@@ -23,6 +27,7 @@ public class PhotoGalleryFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        new FetchItemsTask().execute();
     }
 
     @Nullable
@@ -33,5 +38,14 @@ public class PhotoGalleryFragment extends Fragment {
         mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         return v;
+    }
+
+    private class FetchItemsTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new FlickrFetchr().fetchItems();
+            return null;
+        }
     }
 }
